@@ -1,4 +1,4 @@
-import { Ship } from './index';
+import { Ship, Gameboard } from './index';
 
 test('Test ship 1', () => {
   const ship = Ship(4);
