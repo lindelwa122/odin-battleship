@@ -27,8 +27,29 @@ const Gameboard = () => {
     if (!spot.hit && spot.shipInfo) {
       spot.shipInfo.ship.hit();
       spot.hit = true;
+
+      // Hit other spots that by game logic don't have ships
+      const hitSpots = [[row, col]];
+      if (row - 1 >= 0 && col - 1 >= 0) {
+        _board[row-1][col-1].hit = true;
+        hitSpots.push([row-1, col-1]);
+      } else if (row - 1 >= 0 && col + 1 <= 9) {
+        _board[row-1][col+1].hit = true;
+        hitSpots.push([row-1, col+1]);
+      } else if (row + 1 <= 0 && col - 1 >= 0) {
+        _board[row+1][col-1].hit = true;
+        hitSpots.push([row+1, col-1]);
+      } else if (row + 1 <= 9 && col + 1 <= 9) {
+        _board[row+1][col+1].hit = true;
+        hitSpots.push([row+1, col+1]);
+      }
+
+      return { hitSpots, shipHit: true };
     } else if (!spot.hit) {
       spot.hit = true;
+      return { hitSpots: [[row, col]], shipHit: false };
+    } else {
+      return { hitSpots: [], shipHit: false };
     }
   }
 
