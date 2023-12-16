@@ -88,10 +88,10 @@ test('Test battleship', () => {
 
   gb.receiveAttack(x, y);
   const target2 = board[x][y];
-  expect(target2.hit()).toBe(true);
+  expect(target2.hit).toBe(true);
 
-  for (let row = 0; row < board; row++) {
-    for (let col = 0; col < board[row]; row++) {
+  for (let row = 0; row < board.length; row++) {
+    for (let col = 0; col < board[row].length; col++) {
       gb.receiveAttack(row, col);
     }
   }
