@@ -78,6 +78,14 @@ const Gameboard = () => {
         return false;
       } else if (arrayContains(_occupiedSpots, [row, col + 1])) {
         return false;
+      } else if (arrayContains(_occupiedSpots, [row - 1, col - 1])) {
+        return false;
+      } else if (arrayContains(_occupiedSpots, [row - 1, col + 1])) {
+        return false;
+      } else if (arrayContains(_occupiedSpots, [row + 1, col - 1])) {
+        return false;
+      } else if (arrayContains(_occupiedSpots, [row + 1, col + 1])) {
+        return false;
       }
     }
 
@@ -197,5 +205,25 @@ const Player = (gameboard, computer = false) => {
 
   return { attack };
 }
+
+const GUI = (() => {
+  const paintBoard = (board, computer = false) => {
+    const grid = document.querySelector(computer ? '.comp-grid' : '.my-grid');
+
+    for (let row = 0; row < board.length; row++) {
+      for (let col = 0; col < board[row].length; col++) {
+        if (board[row][col].shipInfo) {
+          const spot = grid.querySelector(`.row[data-coord='${row}'] > .col[data-coord='${col}']`);
+          spot.classList.add('ship');
+        }
+      }
+    }
+  }
+
+  return { paintBoard };
+})();
+
+const pGb = Gameboard();
+GUI.paintBoard(pGb.getBoard());
 
 export { Ship, Gameboard, Player };
