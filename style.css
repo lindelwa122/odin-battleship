@@ -68,3 +68,23 @@ main {
 .board {
   grid-area: 2 / 2 / -1 / -1;
 }
+
+.col.ship {
+  background-color: lightblue;
+}
+
+.col.sunk {
+  background-color: red;
+}
+
+.col.ship.hit {
+  background-color: orange;
+}
+
+.col.hit {
+  background-color: lightgreen;
+}
+
+.comp-grid .col:hover {
+  cursor: pointer;
+}

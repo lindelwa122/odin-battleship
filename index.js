@@ -176,6 +176,10 @@ const Player = (gameboard, computer = false) => {
       throw new Error('Error: Coordinates should be a number data type.');
     }
 
+    if (isNaN(row) || isNaN(col)) {
+      throw new Error('Error: Coordinates should not be NaN.');
+    }
+
     if (row < 0 || row > 9 || col < 0 || col > 9) {
       throw new Error('Error: Invalid coordinates.');
     }
@@ -199,8 +203,10 @@ const Player = (gameboard, computer = false) => {
     const { row, col } = computer ? _getCoords() : { row: r, col: c };
     _validateCoords(row, col);
 
-    const { hitSpots } = gameboard.receiveAttack(row, col);
+    const { hitSpots, shipHit } = gameboard.receiveAttack(row, col);
     hitSpots.forEach(([row, col]) => _illegalSpots.add(`${row},${col}`));
+
+    return shipHit;
   }
 
   return { attack };
@@ -212,18 +218,87 @@ const GUI = (() => {
 
     for (let row = 0; row < board.length; row++) {
       for (let col = 0; col < board[row].length; col++) {
-        if (board[row][col].shipInfo) {
-          const spot = grid.querySelector(`.row[data-coord='${row}'] > .col[data-coord='${col}']`);
-          spot.classList.add('ship');
+        const box = grid.querySelector(`.row[data-coord='${row}'] > .col[data-coord='${col}']`);
+
+        const spot = board[row][col];
+        const shipInfo = spot.shipInfo;
+        if (shipInfo && shipInfo.ship.isSunk()) {
+          box.classList.add('sunk');
+        } else if (shipInfo && spot.hit) {
+          box.classList.add('ship', 'hit');
+        } else if (shipInfo && !computer) {
+          box.classList.add('ship');
+        } else if (spot.hit) {
+          box.classList.add('hit');
         }
       }
     }
   }
 
-  return { paintBoard };
+  const getPlayerPosition = () => {
+    const spots = document.querySelectorAll('.comp-grid .col');
+
+    return new Promise((resolve) => {
+      const handleClick = (e) => {
+        spots.forEach((spot) => {
+          spot.removeEventListener('click', handleClick);
+        });
+
+        const ele = e.target;
+        const parent = ele.parentElement;
+        const row = +parent.dataset.coord;
+        const col = +ele.dataset.coord;
+        resolve({row, col});
+      }
+
+      spots.forEach((spot) => {
+        spot.addEventListener('click', handleClick);
+      });
+    })
+  }
+
+  return { getPlayerPosition, paintBoard };
 })();
 
-const pGb = Gameboard();
-GUI.paintBoard(pGb.getBoard());
+const Game = (() => {
+  const _pB = Gameboard(); // playerBoard
+  const _cB = Gameboard() // computerBoard
+  
+  const _player = Player(_cB);
+  const _comp = Player(_pB, true);
+
+  // Paint player's grid
+  GUI.paintBoard(_pB.getBoard());
+
+  const _isGameOver = () => {
+    return _pB.isAllSunk() || _cB.isAllSunk();
+  }
+
+  let _currentPlayer = 'player';
+  const play = async () => {
+    while (!_isGameOver()) {
+      if (_currentPlayer === 'player') {
+        const { row, col } = await GUI.getPlayerPosition();
+        const shipHit = _player.attack(row, col);
+        if (!shipHit) _currentPlayer = 'comp';
+
+        // Update board
+        const b = _cB.getBoard()
+        GUI.paintBoard(b, true);
+      } else {
+        const shipHit = _comp.attack();
+        if (!shipHit) _currentPlayer = 'player';
+
+        // Update board
+        const b = _pB.getBoard()
+        GUI.paintBoard(b);
+      }
+    }
+  }
+
+  return { play };
+})();
+
+(async () => Game.play())();
 
 export { Ship, Gameboard, Player };
