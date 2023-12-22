@@ -1,4 +1,4 @@
-import { Ship, Gameboard } from './index';
+import { Ship, Gameboard, Player } from './index';
 
 test('Test ship 1', () => {
   const ship = Ship(4);
@@ -97,4 +97,45 @@ test('Test battleship', () => {
   }
 
   expect(gb.isAllSunk()).toBe(true);
+});
+
+test('test player', () => {
+  const gb = Gameboard();
+  const player = Player(gb);
+
+  player.attack(4, 5);
+
+  const board = gb.getBoard();
+  expect(board[4][5].hit).toBe(true);
+
+  player.attack(1, 5);
+  player.attack(0, 0);
+  player.attack(9, 3);
+  player.attack(7, 1);
+
+  const newBoard = gb.getBoard();
+  expect(newBoard[1][5].hit).toBe(true);
+  expect(newBoard[0][0].hit).toBe(true);
+  expect(newBoard[9][3].hit).toBe(true);
+  expect(newBoard[7][1].hit).toBe(true);
+
+  expect(() => player.attack(-1, 10)).toThrow('Error: Invalid coordinates.');
+});
+
+test('test player (computer)', () => {
+  const gb = Gameboard();
+  const player = Player(gb, true);
+
+  player.attack();
+
+  // Test if at least one spot was attacked
+  const board = gb.getBoard();
+  let attackedSpots = 0;
+  for (let row = 0; row < board.length; row++) {
+    for (let col = 0; col < board[row].length; col++) {
+      if (board[row][col].hit) attackedSpots++;
+    }
+  }
+
+  expect(attackedSpots).toBeGreaterThanOrEqual(1);
 });
