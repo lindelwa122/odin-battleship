@@ -155,7 +155,7 @@ const Gameboard = () => {
 
   const getBoard = () => _board;
 
-  const isAllSunk = () => {_ships.every((ship) => ship.isSunk())}
+  const isAllSunk = () => _ships.every((ship) => ship.isSunk())
 
   return { getBoard, isAllSunk, receiveAttack };
 }
@@ -163,7 +163,7 @@ const Gameboard = () => {
 const Player = (gameboard, computer = false) => {
   const _illegalSpots = new Set();
 
-  const validateCoords = (row, col) => {
+  const _validateCoords = (row, col) => {
     if (!(typeof row === 'number' && typeof col === 'number')) {
       throw new Error('Error: Coordinates should be a number data type.');
     }
@@ -177,7 +177,7 @@ const Player = (gameboard, computer = false) => {
     }
   }
 
-  const getCoords = () => {
+  const _getCoords = () => {
     while (true) {
       const random = () => Math.floor(Math.random() * 10);
       const row = random();
@@ -188,8 +188,8 @@ const Player = (gameboard, computer = false) => {
   }
 
   const attack = (r, c) => {
-    const { row, col } = computer ? getCoords() : { row: r, col: c };
-    validateCoords(row, col);
+    const { row, col } = computer ? _getCoords() : { row: r, col: c };
+    _validateCoords(row, col);
 
     const { hitSpots } = gameboard.receiveAttack(row, col);
     hitSpots.forEach(([row, col]) => _illegalSpots.add(`${row},${col}`));
