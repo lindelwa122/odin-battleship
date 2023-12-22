@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battleships</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header><h1>Battleships</h1></header>
+
+    <main>
+        <div class="my-grid">
+            <div class="rows-coords">
+                <div>A</div>
+                <div>B</div>
+                <div>C</div>
+                <div>D</div>
+                <div>E</div>
+                <div>F</div>
+                <div>G</div>
+                <div>H</div>
+                <div>I</div>
+                <div>J</div>
+            </div>
+            <div class="cols-coords">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+                <div>8</div>
+                <div>9</div>
+                <div>10</div>
+            </div>
+            <div class="board">
+                <div class="row" data-coord="0">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="1">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="2">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="3">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="4">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="5">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="6">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="7">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="8">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="9">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+            </div>
+        </div>
+        <div class="comp-grid">
+            <div class="rows-coords">
+                <div>A</div>
+                <div>B</div>
+                <div>C</div>
+                <div>D</div>
+                <div>E</div>
+                <div>F</div>
+                <div>G</div>
+                <div>H</div>
+                <div>I</div>
+                <div>J</div>
+            </div>
+            <div class="cols-coords">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+                <div>8</div>
+                <div>9</div>
+                <div>10</div>
+            </div>
+            <div class="board">
+                <div class="row" data-coord="0">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="1">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="2">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="3">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="4">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="5">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="6">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="7">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="8">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="9">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./index.js"></script>
+</body>
+</html>
