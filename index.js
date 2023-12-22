@@ -155,9 +155,47 @@ const Gameboard = () => {
 
   const getBoard = () => _board;
 
-  const isAllSunk = () => _ships.every((ship) => ship.isSunk())
+  const isAllSunk = () => {_ships.every((ship) => ship.isSunk())}
 
   return { getBoard, isAllSunk, receiveAttack };
 }
 
-export { Ship, Gameboard };
+const Player = (gameboard, computer = false) => {
+  const _illegalSpots = new Set();
+
+  const validateCoords = (row, col) => {
+    if (!(typeof row === 'number' && typeof col === 'number')) {
+      throw new Error('Error: Coordinates should be a number data type.');
+    }
+
+    if (row < 0 || row > 9 || col < 0 || col > 9) {
+      throw new Error('Error: Invalid coordinates.');
+    }
+
+    if (_illegalSpots.has(`${row},${col}`)) {
+      throw new Error('Error: Coordinates has already been hit or is guaranteed to have no ship.');
+    }
+  }
+
+  const getCoords = () => {
+    while (true) {
+      const random = () => Math.floor(Math.random() * 10);
+      const row = random();
+      const col = random();
+
+      if (!_illegalSpots.has(`${row},${col}`)) return { row, col };
+    }
+  }
+
+  const attack = (r, c) => {
+    const { row, col } = computer ? getCoords() : { row: r, col: c };
+    validateCoords(row, col);
+
+    const { hitSpots } = gameboard.receiveAttack(row, col);
+    hitSpots.forEach(([row, col]) => _illegalSpots.add(`${row},${col}`));
+  }
+
+  return { attack };
+}
+
+export { Ship, Gameboard, Player };
