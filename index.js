@@ -23,25 +23,73 @@ const Gameboard = () => {
   }
 
   const receiveAttack = (row, col) => {
+    const findShipStart = (row, col, shipInfo) => {
+      for (let i = 0; i < 4; i++) {
+        let step;
+        if (shipInfo.direction === 'horizontal') {
+          step = _board[row][col - i].shipInfo;
+
+          if (step.isStart) {
+            return col - i
+          }
+        } else {
+          step = _board[row - i][col].shipInfo;
+
+          if (step.isStart) {
+            return row - i;
+          }
+        }
+      }
+    }
+
+    const hitSpots = [];
+    const hitShip = (row, col) => {
+      _board[row][col].hit = true;
+      hitSpots.push([row, col]);
+    }
+
     const spot = _board[row][col];
-    if (!spot.hit && spot.shipInfo) {
-      spot.shipInfo.ship.hit();
-      spot.hit = true;
+    const shipInfo = spot.shipInfo;
+    if (!spot.hit && shipInfo) {
+      shipInfo.ship.hit();
+      hitShip(row, col);
 
       // Hit other spots that by game logic don't have ships
-      const hitSpots = [[row, col]];
-      if (row - 1 >= 0 && col - 1 >= 0) {
-        _board[row-1][col-1].hit = true;
-        hitSpots.push([row-1, col-1]);
-      } else if (row - 1 >= 0 && col + 1 <= 9) {
-        _board[row-1][col+1].hit = true;
-        hitSpots.push([row-1, col+1]);
-      } else if (row + 1 <= 0 && col - 1 >= 0) {
-        _board[row+1][col-1].hit = true;
-        hitSpots.push([row+1, col-1]);
-      } else if (row + 1 <= 9 && col + 1 <= 9) {
-        _board[row+1][col+1].hit = true;
-        hitSpots.push([row+1, col+1]);
+      row - 1 >= 0 && col - 1 >= 0 && hitShip(row - 1, col - 1);
+      row - 1 >= 0 && col + 1 <= 9 && hitShip(row - 1, col + 1);
+      row + 1 <= 9 && col - 1 >= 0 && hitShip(row + 1, col - 1);
+      row + 1 <= 9 && col + 1 <= 9 && hitShip(row + 1, col + 1);
+
+      if (shipInfo.ship.isSunk()) {
+        const shipLen = shipInfo.ship.getLength();
+        const start = findShipStart(row, col, shipInfo);
+        const dir = shipInfo.direction;
+
+        for (let i = 0; i < shipLen; i++) {
+          if (dir === 'horizontal') {
+            if (i === 0 && start - 1 >= 0) hitShip(row,  start - 1);
+
+            if (start + i <= 9) {
+              row - 1 >= 0 && hitShip(row - 1, start + i);
+              row + 1 <= 9 && hitShip(row + 1, start + i);
+            }
+
+            if (i === (shipLen - 1) && start + shipLen <= 9) {
+              hitShip(row, start + shipLen)
+            };
+          } else {
+            if (i === 0 && start - 1 >= 0) hitShip(start - 1, col);
+
+            if (start + i <= 9) {
+              col - 1 >= 0 && hitShip(start + i, col - 1);
+              col + 1 <= 9 && hitShip(start + 1, col + 1);
+            }
+
+            if (i === (shipLen - 1) && start + shipLen <= 9) {
+              hitShip(start + shipLen, col);
+            };
+          }
+        }
       }
 
       return { hitSpots, shipHit: true };
