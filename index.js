@@ -233,7 +233,7 @@ const Player = (gameboard, computer = false) => {
     }
 
     if (_illegalSpots.has(`${row},${col}`)) {
-      throw new Error('Error: Coordinates has already been hit or is guaranteed to have no ship.');
+      return false;
     }
   }
 
@@ -249,7 +249,7 @@ const Player = (gameboard, computer = false) => {
 
   const attack = (r, c) => {
     const { row, col } = computer ? _getCoords() : { row: r, col: c };
-    _validateCoords(row, col);
+    if (!_validateCoords(row, col)) return false;
 
     const { hitSpots, shipHit } = gameboard.receiveAttack(row, col);
     hitSpots.forEach(([row, col]) => _illegalSpots.add(`${row},${col}`));
@@ -308,45 +308,45 @@ const GUI = (() => {
   return { getPlayerPosition, paintBoard };
 })();
 
-const Game = (() => {
-  const _pB = Gameboard(); // playerBoard
-  const _cB = Gameboard() // computerBoard
+// const Game = (() => {
+//   const _pB = Gameboard(); // playerBoard
+//   const _cB = Gameboard() // computerBoard
   
-  const _player = Player(_cB);
-  const _comp = Player(_pB, true);
+//   const _player = Player(_cB);
+//   const _comp = Player(_pB, true);
 
-  // Paint player's grid
-  GUI.paintBoard(_pB.getBoard());
+//   // Paint player's grid
+//   GUI.paintBoard(_pB.getBoard());
 
-  const _isGameOver = () => {
-    return _pB.isAllSunk() || _cB.isAllSunk();
-  }
+//   const _isGameOver = () => {
+//     return _pB.isAllSunk() || _cB.isAllSunk();
+//   }
 
-  let _currentPlayer = 'player';
-  const play = async () => {
-    while (!_isGameOver()) {
-      if (_currentPlayer === 'player') {
-        const { row, col } = await GUI.getPlayerPosition();
-        const shipHit = _player.attack(row, col);
-        if (!shipHit) _currentPlayer = 'comp';
+//   let _currentPlayer = 'player';
+//   const play = async () => {
+//     while (!_isGameOver()) {
+//       if (_currentPlayer === 'player') {
+//         const { row, col } = await GUI.getPlayerPosition();
+//         const shipHit = _player.attack(row, col);
+//         if (!shipHit) _currentPlayer = 'comp';
 
-        // Update board
-        const b = _cB.getBoard()
-        GUI.paintBoard(b, true);
-      } else {
-        const shipHit = _comp.attack();
-        if (!shipHit) _currentPlayer = 'player';
+//         // Update board
+//         const b = _cB.getBoard()
+//         GUI.paintBoard(b, true);
+//       } else {
+//         const shipHit = _comp.attack();
+//         if (!shipHit) _currentPlayer = 'player';
 
-        // Update board
-        const b = _pB.getBoard()
-        GUI.paintBoard(b);
-      }
-    }
-  }
+//         // Update board
+//         const b = _pB.getBoard()
+//         GUI.paintBoard(b);
+//       }
+//     }
+//   }
 
-  return { play };
-})();
+//   return { play };
+// })();
 
-(async () => Game.play())();
+// (async () => Game.play())();
 
 export { Ship, Gameboard, Player };

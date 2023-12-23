@@ -122,7 +122,7 @@ test('test player', () => {
   expect(() => player.attack('str', 7)).toThrow('Error: Coordinates should be a number data type.');
   expect(() => player.attack(2, 'not a num')).toThrow('Error: Coordinates should be a number data type.');
   expect(() => player.attack('str', 'a')).toThrow('Error: Coordinates should be a number data type.');
-  expect(() => player.attack(0, 0)).toThrow('Error: Coordinates has already been hit or is guaranteed to have no ship.');
+  expect(player.attack(0, 0)).toBe(false);
   expect(() => player.attack(-1, 10)).toThrow('Error: Invalid coordinates.');
 });
 
