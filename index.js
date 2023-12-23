@@ -251,7 +251,7 @@ const Player = (gameboard, computer = false) => {
 
   const attack = (r, c) => {
     const { row, col } = computer ? _getCoords() : { row: r, col: c };
-    if (!_validateCoords(row, col)) return false;
+    if (!_validateCoords(row, col)) return null;
 
     const { hitSpots, shipHit } = gameboard.receiveAttack(row, col);
     hitSpots.forEach(([row, col]) => _illegalSpots.add(`${row},${col}`));
@@ -262,93 +262,94 @@ const Player = (gameboard, computer = false) => {
   return { attack };
 }
 
-// const GUI = (() => {
-//   const paintBoard = (board, computer = false) => {
-//     const grid = document.querySelector(computer ? '.comp-grid' : '.my-grid');
+const GUI = (() => {
+  const paintBoard = (board, computer = false) => {
+    const grid = document.querySelector(computer ? '.comp-grid' : '.my-grid');
 
-//     for (let row = 0; row < board.length; row++) {
-//       for (let col = 0; col < board[row].length; col++) {
-//         const box = grid.querySelector(`.row[data-coord='${row}'] > .col[data-coord='${col}']`);
+    for (let row = 0; row < board.length; row++) {
+      for (let col = 0; col < board[row].length; col++) {
+        const box = grid.querySelector(`.row[data-coord='${row}'] > .col[data-coord='${col}']`);
 
-//         const spot = board[row][col];
-//         const shipInfo = spot.shipInfo;
-//         if (shipInfo && shipInfo.ship.isSunk()) {
-//           box.classList.add('sunk');
-//         } else if (shipInfo && spot.hit) {
-//           box.classList.add('ship', 'hit');
-//         } else if (shipInfo && !computer) {
-//           box.classList.add('ship');
-//         } else if (spot.hit) {
-//           box.classList.add('hit');
-//         }
-//       }
-//     }
-//   }
+        const spot = board[row][col];
+        const shipInfo = spot.shipInfo;
+        if (shipInfo && shipInfo.ship.isSunk()) {
+          box.classList.add('sunk');
+        } else if (shipInfo && spot.hit) {
+          box.classList.add('ship', 'hit');
+        } else if (shipInfo && !computer) {
+          box.classList.add('ship');
+        } else if (spot.hit) {
+          box.classList.add('hit');
+        }
+      }
+    }
+  }
 
-//   const getPlayerPosition = () => {
-//     const spots = document.querySelectorAll('.comp-grid .col');
+  const getPlayerPosition = () => {
+    const spots = document.querySelectorAll('.comp-grid .col');
 
-//     return new Promise((resolve) => {
-//       const handleClick = (e) => {
-//         spots.forEach((spot) => {
-//           spot.removeEventListener('click', handleClick);
-//         });
+    return new Promise((resolve) => {
+      const handleClick = (e) => {
+        spots.forEach((spot) => {
+          spot.removeEventListener('click', handleClick);
+        });
 
-//         const ele = e.target;
-//         const parent = ele.parentElement;
-//         const row = +parent.dataset.coord;
-//         const col = +ele.dataset.coord;
-//         resolve({row, col});
-//       }
+        const ele = e.target;
+        const parent = ele.parentElement;
+        const row = +parent.dataset.coord;
+        const col = +ele.dataset.coord;
+        resolve({row, col});
+      }
 
-//       spots.forEach((spot) => {
-//         spot.addEventListener('click', handleClick);
-//       });
-//     })
-//   }
+      spots.forEach((spot) => {
+        spot.addEventListener('click', handleClick);
+      });
+    })
+  }
 
-//   return { getPlayerPosition, paintBoard };
-// })();
+  return { getPlayerPosition, paintBoard };
+})();
 
-// const Game = (() => {
-//   const _pB = Gameboard(); // playerBoard
-//   const _cB = Gameboard() // computerBoard
+const Game = (() => {
+  const _pB = Gameboard(); // playerBoard
+  const _cB = Gameboard() // computerBoard
   
-//   const _player = Player(_cB);
-//   const _comp = Player(_pB, true);
+  const _player = Player(_cB);
+  const _comp = Player(_pB, true);
 
-//   // Paint player's grid
-//   GUI.paintBoard(_pB.getBoard());
+  // Paint player's grid
+  GUI.paintBoard(_pB.getBoard());
 
-//   const _isGameOver = () => {
-//     return _pB.isAllSunk() || _cB.isAllSunk();
-//   }
+  const _isGameOver = () => {
+    return _pB.isAllSunk() || _cB.isAllSunk();
+  }
 
-//   let _currentPlayer = 'player';
-//   const play = async () => {
-//     while (!_isGameOver()) {
-//       if (_currentPlayer === 'player') {
-//         const { row, col } = await GUI.getPlayerPosition();
-//         const shipHit = _player.attack(row, col);
-//         if (!shipHit) _currentPlayer = 'comp';
+  let _currentPlayer = 'player';
+  const play = async () => {
+    while (!_isGameOver()) {
+      if (_currentPlayer === 'player') {
+        const { row, col } = await GUI.getPlayerPosition();
+        const shipHit = _player.attack(row, col);
 
-//         // Update board
-//         const b = _cB.getBoard()
-//         GUI.paintBoard(b, true);
-//       } else {
-//         const shipHit = _comp.attack();
-//         if (!shipHit) _currentPlayer = 'player';
+        if (!shipHit && shipHit !== null) _currentPlayer = 'comp';
 
-//         // Update board
-//         const b = _pB.getBoard()
-//         GUI.paintBoard(b);
-//       }
-//     }
-//   }
+        // Update board
+        const b = _cB.getBoard()
+        GUI.paintBoard(b, true);
+      } else {
+        const shipHit = _comp.attack();
+        if (!shipHit) _currentPlayer = 'player';
 
-//   return { play };
-// })();
+        // Update board
+        const b = _pB.getBoard()
+        GUI.paintBoard(b);
+      }
+    }
+  }
 
-// (async () => Game.play())();
+  return { play };
+})();
+
+(async () => Game.play())();
 
 export { Ship, Gameboard, Player };
