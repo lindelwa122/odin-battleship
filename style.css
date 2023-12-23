@@ -74,7 +74,7 @@ main {
 }
 
 .col.sunk {
-  background-color: red;
+  background-color: red !important;
 }
 
 .col.ship.hit {
