@@ -82,7 +82,7 @@ const Gameboard = () => {
 
             if (start + i <= 9) {
               col - 1 >= 0 && hitShip(start + i, col - 1);
-              col + 1 <= 9 && hitShip(start + 1, col + 1);
+              col + 1 <= 9 && hitShip(start + i, col + 1);
             }
 
             if (i === (shipLen - 1) && start + shipLen <= 9) {
