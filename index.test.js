@@ -1,4 +1,4 @@
-import { Ship, Gameboard, Player } from './index';
+import { Ship, Gameboard, Player, Computer } from './index';
 
 test('Test ship 1', () => {
   const ship = Ship(4);
@@ -122,15 +122,15 @@ test('test player', () => {
   expect(() => player.attack('str', 7)).toThrow('Coordinates should be a number data type.');
   expect(() => player.attack(2, 'not a num')).toThrow('Coordinates should be a number data type.');
   expect(() => player.attack('str', 'a')).toThrow('Coordinates should be a number data type.');
-  expect(player.attack(0, 0)).toBe(false);
+  expect(player.attack(0, 0)).toBe(null);
   expect(() => player.attack(-1, 10)).toThrow('Invalid coordinates.');
 });
 
 test('test player (computer)', () => {
   const gb = Gameboard();
-  const player = Player(gb, true);
+  const comp = Computer(gb, true);
 
-  player.attack();
+  comp.prepareAttack();
 
   // Test if at least one spot was attacked
   const board = gb.getBoard();
