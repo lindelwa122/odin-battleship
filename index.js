@@ -249,17 +249,119 @@ const Player = (gameboard, computer = false) => {
     }
   }
 
-  const attack = (r, c) => {
-    const { row, col } = computer ? _getCoords() : { row: r, col: c };
+  const attack = (row, col) => {
     if (!_validateCoords(row, col)) return null;
 
     const { hitSpots, shipHit } = gameboard.receiveAttack(row, col);
     hitSpots.forEach(([row, col]) => _illegalSpots.add(`${row},${col}`));
 
-    return shipHit;
+    return { shipHit, hitSpots };
   }
 
   return { attack };
+}
+
+const Computer = (gameboard) => {
+  const p = Player(gameboard, true);
+  let _target = null;
+  const _illegalSpots = new Set();
+
+  const _getPotentialTarget = (row, col) => {
+    const pickOne = (arr) => {
+      const random = Math.floor(Math.random() * arr.length);
+      return arr[random];
+    }
+
+    const board = gameboard.getBoard();
+    const targets = [];
+
+    if (row - 1 >= 0 && !board[row - 1][col].hit) {
+      targets.push({ row: row - 1, col });
+    } 
+    
+    if (col + 1 <= 9 && !board[row][col + 1].hit) {
+      targets.push({ row, col: col + 1 });
+    } 
+    
+    if (row + 1 <= 9 && !board[row + 1][col].hit) {
+      targets.push({ row: row + 1, col });
+    } 
+    
+    if (col - 1 >= 0 && !board[row][col - 1].hit) {
+      targets.push({ row, col: col - 1 });
+    }
+
+    return pickOne(targets);
+  }
+
+  const _getCoords = () => {
+    if (_target) {
+      console.log('target', _target);
+      return _getPotentialTarget(_target.row, _target.col);
+    } else {
+      while (true) {
+        const random = () => Math.floor(Math.random() * 10);
+        const row = random();
+        const col = random();
+
+        if (!_illegalSpots.has(`${row},${col}`)) return { row, col };
+      }
+    }
+  }
+
+  const _hasShipSank  = (row, col) => {
+    const board = gameboard.getBoard();
+    const shipInfo = board[row][col].shipInfo;
+    return shipInfo && shipInfo.ship.isSunk();
+  }
+
+  const _updateIllegalSpots = (spots) => {
+    spots.forEach(([row, col]) => _illegalSpots.add(`${row},${col}`));
+  }
+
+  const _attack = (row, col) => {
+    let { shipHit, hitSpots } = p.attack(row, col);
+    _updateIllegalSpots(hitSpots);
+
+    const shipSank = _hasShipSank(row, col);
+    if (shipHit && !shipSank) {
+      if (!_target || !_getPotentialTarget(_target.row, _target.col)) {
+        _target = { row, col };
+      }
+      prepareAttack();
+    } else if (shipHit && shipSank) {
+      _target = null;
+      prepareAttack();
+    }
+  }
+
+  // const _attack = (row, col) => {
+  //   let { shipHit, hitSpots } = p.attack(row, col);
+  //   _updateIllegalSpots(hitSpots);
+
+  //   if (!shipHit || (shipHit && _hasShipSank(row, col))) return;
+
+  //   // const target = _getPotentialTarget(row, col);
+  //   // _attack(target.row, target.col);
+
+  //   const target = _getPotentialTarget(row, col);
+  //   ({ shipHit, hitSpots } = p.attack(target.row, target.col));
+  //   _updateIllegalSpots(hitSpots);
+
+  //   if (shipHit && !_hasShipSank(row, col)) {
+  //     const newTarget = _getPotentialTarget(row, col);
+  //     _attack(newTarget.row, newTarget.col);
+  //   } else if (!shipHit) {
+  //     _target = _getPotentialTarget(row, col);
+  //   }
+  // }
+
+  const prepareAttack = () => {
+    const { row, col } = _getCoords();
+    _attack(row, col);
+  }
+
+  return { prepareAttack };
 }
 
 const GUI = (() => {
@@ -315,7 +417,7 @@ const Game = (() => {
   const _cB = Gameboard() // computerBoard
   
   const _player = Player(_cB);
-  const _comp = Player(_pB, true);
+  const _comp = Computer(_pB, true);
 
   // Paint player's grid
   GUI.paintBoard(_pB.getBoard());
@@ -329,16 +431,16 @@ const Game = (() => {
     while (!_isGameOver()) {
       if (_currentPlayer === 'player') {
         const { row, col } = await GUI.getPlayerPosition();
-        const shipHit = _player.attack(row, col);
+        const res = _player.attack(row, col);
 
-        if (!shipHit && shipHit !== null) _currentPlayer = 'comp';
+        if (res && !res.shipHit) _currentPlayer = 'comp';
 
         // Update board
         const b = _cB.getBoard()
         GUI.paintBoard(b, true);
       } else {
-        const shipHit = _comp.attack();
-        if (!shipHit) _currentPlayer = 'player';
+        _comp.prepareAttack();
+        _currentPlayer = 'player';
 
         // Update board
         const b = _pB.getBoard()
@@ -352,4 +454,4 @@ const Game = (() => {
 
 (async () => Game.play())();
 
-export { Ship, Gameboard, Player };
+// export { Ship, Gameboard, Player, Computer };
