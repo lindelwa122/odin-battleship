@@ -17,6 +17,30 @@ const Game = () => {
     return _pB.isAllSunk() || _cB.isAllSunk();
   }
 
+  const _restartGame = () => {
+    const playBtn = document.querySelector('.play-again-btn');
+    const handleClick = () => {
+      playBtn.removeEventListener('click', handleClick);
+      document.querySelector('dialog').close();
+      const game = Game();
+      game.play();
+    }
+
+    playBtn.addEventListener('click', handleClick);
+  }
+
+  const _displayWinner = () => {
+    const playerWon = _cB.isAllSunk();
+    const dialog = document.querySelector('dialog');
+    dialog.showModal();
+    const textContainer = dialog.querySelector('p');
+    textContainer.textContent = playerWon
+      ? 'Game Over. Congratulations!! You won.'
+      : 'Game Over. You lost.';
+
+    _restartGame();
+  }
+
   let _currentPlayer = 'player';
   const play = async () => {
     while (!_isGameOver()) {
@@ -38,6 +62,8 @@ const Game = () => {
         GUI.paintBoard(b);
       }
     }
+
+    _displayWinner();
   }
 
   return { play };
