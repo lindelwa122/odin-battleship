@@ -17,11 +17,17 @@ const Game = () => {
     return _pB.isAllSunk() || _cB.isAllSunk();
   }
 
+  const _cleanUpBoard = () => {
+    const spots = document.querySelectorAll('.col');
+    spots.forEach(spot => spot.classList.remove('sunk', 'ship', 'hit'));
+  }
+
   const _restartGame = () => {
     const playBtn = document.querySelector('.play-again-btn');
     const handleClick = () => {
       playBtn.removeEventListener('click', handleClick);
       document.querySelector('dialog').close();
+      _cleanUpBoard();
       const game = Game();
       game.play();
     }
