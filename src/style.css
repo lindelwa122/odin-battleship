@@ -54,7 +54,7 @@ main {
 .comp-grid,
 .my-grid {
   display: grid;
-  grid-template: 40px auto / 40px auto;
+  grid-template: 40px auto 20px / 40px auto;
 }
 
 .rows-coords {
@@ -62,11 +62,11 @@ main {
 }
 
 .cols-coords {
-  grid-area: 2 / 1 / -1 / 2;
+  grid-area: 2 / 1 / -2 / 2;
 }
 
 .board {
-  grid-area: 2 / 2 / -1 / -1;
+  grid-area: 2 / 2 / -2 / -1;
 }
 
 .col.ship {
@@ -103,4 +103,10 @@ dialog > button {
   border: none;
   background: cornflowerblue;
   cursor: pointer;
+}
+
+.caption {
+  font-weight: 600;
+  grid-area: -1 / 1 / -1 / -1;
+  text-align: center;
 }
