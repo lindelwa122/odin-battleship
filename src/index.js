@@ -1,14 +1,20 @@
 import "normalize.css";
 import "./style.css";
 import Game from "./modules/game/game";
+import GUI from "./modules/gui/gui";
 
-const updateCoordsBtn = document.querySelector('.update-coords-btn');
-updateCoordsBtn.addEventListener('click', () => {
-  const oldRow = document.querySelector('.from > .row').value;
-  const oldCol = document.querySelector('.from > .col').value;
-  const newRow = document.querySelector('.to > .row').value;
-  const newCol = document.querySelector('.to > .col').value;
+const getFormData = (form) => {
+  const formData = {};
+  for (const data of form) {
+    formData[data.name] = data.value;
+  }
+  return formData;
+}
 
+const form = document.querySelector('form');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const { oldRow, oldCol, newRow, newCol } = getFormData(e.target);
   const updated = Game.updateShipCoords(+oldRow, +oldCol, +newRow, +newCol);
   if (!updated) {
     alert("Board wasn't updated, check if your coordinates are correct.");
@@ -17,5 +23,6 @@ updateCoordsBtn.addEventListener('click', () => {
 
 const playBtn = document.querySelector('.play-btn');
 playBtn.addEventListener('click', () => {
+  GUI.hideForm();
   Game.play();
 });

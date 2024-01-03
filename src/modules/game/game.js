@@ -28,8 +28,7 @@ const Game = () => {
       playBtn.removeEventListener('click', handleClick);
       document.querySelector('dialog').close();
       _cleanUpBoard();
-      const game = Game();
-      game.play();
+      GUI.showForm();
     }
 
     playBtn.addEventListener('click', handleClick);
@@ -98,7 +97,6 @@ const Game = () => {
     const shipInfo = board[row][col].shipInfo;
     const shipLen = shipInfo.ship.getLength();
     const shipStart = _findShipStart(row, col, shipInfo);
-
 
     console.log('row start', shipStart.row)
     console.log('col start', shipStart.col)

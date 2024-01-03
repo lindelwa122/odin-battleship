@@ -43,7 +43,15 @@ const GUI = () => {
     })
   }
 
-  return { getPlayerPosition, paintBoard };
+  const showForm = () => {
+    document.querySelector('form').style.display = 'flex';
+  }
+
+  const hideForm = () => {
+    document.querySelector('form').style.display = 'none';
+  }
+
+  return { getPlayerPosition, paintBoard, showForm, hideForm };
 };
 
 export default GUI();
