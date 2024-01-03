@@ -97,12 +97,23 @@ dialog {
   text-align: center;
 }
 
-dialog > button {
+button {
   padding: 10px;
   border-radius: 10px;
   border: none;
-  background: cornflowerblue;
+  background: royalblue;
+  color: white;
   cursor: pointer;
+  transition: all 1s;
+}
+
+button:hover {
+  transform: scale(1.2, 1.1);
+}
+
+button.play-btn {
+  background-color: green;
+  color: white;
 }
 
 .caption {
@@ -110,3 +121,27 @@ dialog > button {
   grid-area: -1 / 1 / -1 / -1;
   text-align: center;
 }
+
+header {
+  display: flex;
+  gap: 100px;
+}
+
+form {
+  display: flex;
+  gap: 30px;
+  justify-self: center;
+}
+
+form > .from,
+form > .to {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+select {
+  padding: 10px;
+  border-radius: 10px;
+}
+
