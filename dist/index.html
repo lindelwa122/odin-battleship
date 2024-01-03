@@ -6,7 +6,71 @@
     <title>Battleships</title>
 </head>
 <body>
-    <header><h1>Battleships</h1></header>
+    <header>
+        <h1>Battleships</h1>
+        <form class="update-coords">
+            <div class="from">
+                <div class="caption">From: </div>
+                <select id="old-row-coords">
+                    <option disabled>Row</option>
+                    <option value="0">1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                    <option value="5">6</option>
+                    <option value="6">7</option>
+                    <option value="7">8</option>
+                    <option value="8">9</option>
+                    <option value="9">10</option>
+                </select>
+                <select id="old-col-coords">
+                    <option disabled>Col</option>
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                    <option value="2">C</option>
+                    <option value="3">D</option>
+                    <option value="4">E</option>
+                    <option value="5">F</option>
+                    <option value="6">G</option>
+                    <option value="7">H</option>
+                    <option value="8">I</option>
+                    <option value="9">J</option>
+                </select>
+            </div>
+            <div class="to">
+                <div class="caption">To: </div>
+                <select id="new-row-coords">
+                    <option disabled>Row</option>
+                    <option value="0">1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                    <option value="5">6</option>
+                    <option value="6">7</option>
+                    <option value="7">8</option>
+                    <option value="8">9</option>
+                    <option value="9">10</option>
+                </select>
+                <select id="new-col-coords">
+                    <option disabled >Col</option>
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                    <option value="2">C</option>
+                    <option value="3">D</option>
+                    <option value="4">E</option>
+                    <option value="5">F</option>
+                    <option value="6">G</option>
+                    <option value="7">H</option>
+                    <option value="8">I</option>
+                    <option value="9">J</option>
+                </select>
+            </div>
+            <button class="update-coords-btn">Update Ship Position</button>
+            <button type="button" class="play-btn">Play</button>
+        </form>
+    </header>
 
     <main>
         <div class="my-grid">
