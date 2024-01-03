@@ -73,19 +73,20 @@ const Game = () => {
   }
 
   const _findShipStart = (row, col, shipInfo) => {
+    const board = _pB.getBoard();
     for (let i = 0; i < 4; i++) {
       let step;
       if (shipInfo.direction === "horizontal") {
-        step = _board[row][col - i].shipInfo;
+        step = board[row][col - i].shipInfo;
 
         if (step.isStart) {
-          return col - i;
+          return { row, col: col - i};
         }
       } else {
-        step = _board[row - i][col].shipInfo;
+        step = board[row - i][col].shipInfo;
 
         if (step.isStart) {
-          return row - i;
+          return { row: row - i, col };
         }
       }
     }
@@ -96,13 +97,17 @@ const Game = () => {
     const board = _pB.getBoard();
     const shipInfo = board[row][col].shipInfo;
     const shipLen = shipInfo.ship.getLength();
-    const { rowStart, colStart } = _findShipStart(row, col, shipInfo);
+    const shipStart = _findShipStart(row, col, shipInfo);
+
+
+    console.log('row start', shipStart.row)
+    console.log('col start', shipStart.col)
 
     for (let i = 0; i < shipLen; i++) {
       if (shipInfo.direction === 'horizontal') {
-        shipCoords.push({ row, col: colStart + i });
+        shipCoords.push({ row, col: shipStart.col + i });
       } else {
-        shipCoords.push({ row: rowStart + i, col });
+        shipCoords.push({ row: shipStart.row + i, col });
       }
     }
 
@@ -112,22 +117,26 @@ const Game = () => {
   const _validateNewCoords = (row, col, shipLen, dir) => {
     const isOccupied = (row, col) => {
       const board = _pB.getBoard();
-      return board[col][row].shipInfo ?? false;
+      if (row >= 0 && row <= 9 && col >= 0 && col <= 9) {
+        return Boolean(board[row][col].shipInfo);
+      } else {
+        return false;
+      }
     }
 
     const isLegal = (spots) => {
       for (const spot of spots) {
-        const [row, col] = spot;
+        const { row, col } = spot;
   
-        if (isOccupied(spot)) return false;
-        else if (isOccupied([row - 1, col])) return false;
-        else if (isOccupied([row + 1, col])) return false;
-        else if (isOccupied([row, col - 1])) return false;
-        else if (isOccupied([row, col + 1])) return false;
-        else if (isOccupied([row - 1, col - 1]))  return false;
-        else if (isOccupied([row - 1, col + 1])) return false;
-        else if (isOccupied([row + 1, col - 1])) return false;
-        else if (isOccupied([row + 1, col + 1])) return false;
+        if (isOccupied(row, col)) return false;
+        else if (isOccupied(row - 1, col)) return false;
+        else if (isOccupied(row + 1, col)) return false;
+        else if (isOccupied(row, col - 1)) return false;
+        else if (isOccupied(row, col + 1)) return false;
+        else if (isOccupied(row - 1, col - 1))  return false;
+        else if (isOccupied(row - 1, col + 1)) return false;
+        else if (isOccupied(row + 1, col - 1)) return false;
+        else if (isOccupied(row + 1, col + 1)) return false;
       }
   
       return true;
@@ -142,10 +151,14 @@ const Game = () => {
       }
     }
 
+    console.log(newCoords);
+
     return isLegal(newCoords);
   }
 
   const updateShipCoords = (row, col, newRow, newCol) => {
+    console.log("identify row", row)
+
     const board = _pB.getBoard();
     if (!board[row][col].shipInfo) return false;
 
@@ -156,13 +169,22 @@ const Game = () => {
     }
 
     for (let i = 0; i < shipCoords.length; i++) {
+      console.log('i', i);
+      console.log('newRow', newRow);
+      console.log('newCol', newCol);
       const { row, col } = shipCoords[i];
+      console.log('row', row);
+      console.log('col', col);
       if (dir === 'horizontal') {
         board[newRow][newCol + i] = board[row][col];
       } else {
         board[newRow + i][newCol] = board[row][col];
       }
+      board[row][col] = { shipInfo: null, hit: false };
     }
+
+    _cleanUpBoard();
+    GUI.paintBoard(_pB.getBoard());
 
     return true;
   }
