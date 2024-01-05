@@ -2,6 +2,7 @@ import Gameboard from "../gameboard/gameboard";
 import Player from "../player/player";
 import Computer from "../computer/computer";
 import GUI from "../gui/gui";
+import startGame from "../../startGame";
 
 const Game = () => {
   const _pB = Gameboard(); // playerBoard
@@ -29,6 +30,7 @@ const Game = () => {
       document.querySelector('dialog').close();
       _cleanUpBoard();
       GUI.showForm();
+      startGame();
     }
 
     playBtn.addEventListener('click', handleClick);
@@ -190,4 +192,4 @@ const Game = () => {
   return { play, updateShipCoords };
 };
 
-export default Game();
+export default Game;
