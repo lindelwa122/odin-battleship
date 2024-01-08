@@ -1,7 +1,7 @@
-import Gameboard from './gameboard';
+import gameboard from './gameboard';
 
 test('Test battleship', () => {
-  const gb = Gameboard();
+  const gb = gameboard();
   const board = gb.getBoard();
 
   const countedShips = [];

@@ -1,7 +1,7 @@
-import Player from '../player/player';
+import player from '../player/player';
 
-const Computer = (gameboard) => {
-  const p = Player(gameboard, true);
+const computer = (gameboard) => {
+  const p = player(gameboard, true);
   const _targets = [];
   const _illegalSpots = new Set();
 
@@ -65,7 +65,7 @@ const Computer = (gameboard) => {
   };
 
   const _attack = (row, col) => {
-    let { shipHit, hitSpots } = p.attack(row, col);
+    const { shipHit, hitSpots } = p.attack(row, col);
     _updateIllegalSpots(hitSpots);
 
     const shipSank = shipHit ? _hasShipSank(row, col) : false;
@@ -86,4 +86,4 @@ const Computer = (gameboard) => {
   return { prepareAttack };
 };
 
-export default Computer;
+export default computer;

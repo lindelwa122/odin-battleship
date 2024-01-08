@@ -1,42 +1,42 @@
-import Ship from './ship';
+import ship from './ship';
 
-test('Test ship 1', () => {
-  const ship = Ship(4);
+test('Test s 1', () => {
+  const s = ship(4);
 
-  expect(ship.getLength()).toBe(4);
-  expect(ship.getHits()).toBe(0);
+  expect(s.getLength()).toBe(4);
+  expect(s.getHits()).toBe(0);
 
-  ship.hit();
-  expect(ship.getLength()).toBe(4);
-  expect(ship.getHits()).toBe(1);
-  expect(ship.isSunk()).toBe(false);
+  s.hit();
+  expect(s.getLength()).toBe(4);
+  expect(s.getHits()).toBe(1);
+  expect(s.isSunk()).toBe(false);
 
-  ship.hit();
-  ship.hit();
-  ship.hit();
-  expect(ship.getHits()).toBe(4);
-  expect(ship.isSunk()).toBe(true);
+  s.hit();
+  s.hit();
+  s.hit();
+  expect(s.getHits()).toBe(4);
+  expect(s.isSunk()).toBe(true);
 
-  ship.hit();
-  expect(ship.getHits()).toBe(4);
+  s.hit();
+  expect(s.getHits()).toBe(4);
 });
 
-test('Test ship 2', () => {
-  const ship = Ship(3);
+test('Test s 2', () => {
+  const s = ship(3);
 
-  expect(ship.getLength()).toBe(3);
-  expect(ship.getHits()).toBe(0);
+  expect(s.getLength()).toBe(3);
+  expect(s.getHits()).toBe(0);
 
-  ship.hit();
-  expect(ship.getLength()).toBe(3);
-  expect(ship.getHits()).toBe(1);
-  expect(ship.isSunk()).toBe(false);
+  s.hit();
+  expect(s.getLength()).toBe(3);
+  expect(s.getHits()).toBe(1);
+  expect(s.isSunk()).toBe(false);
 
-  ship.hit();
-  ship.hit();
-  expect(ship.getHits()).toBe(3);
-  expect(ship.isSunk()).toBe(true);
+  s.hit();
+  s.hit();
+  expect(s.getHits()).toBe(3);
+  expect(s.isSunk()).toBe(true);
 
-  ship.hit();
-  expect(ship.getHits()).toBe(3);
+  s.hit();
+  expect(s.getHits()).toBe(3);
 });

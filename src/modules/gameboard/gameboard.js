@@ -1,6 +1,6 @@
-import Ship from '../ship/ship';
+import ship from '../ship/ship';
 
-const Gameboard = () => {
+const gameboard = () => {
   const _board = [];
   const _occupiedSpots = [];
 
@@ -183,13 +183,13 @@ const Gameboard = () => {
       );
     }
 
-    const ship = Ship(len);
-    _ships.push(ship);
+    const s = ship(len);
+    _ships.push(s);
     const { dir, spots } = _randomSpots(len);
     spots.forEach((spot, index) => {
       const [row, col] = spot;
       _board[row][col].shipInfo = {
-        ship,
+        ship: s,
         direction: dir,
         isStart: index === 0,
         isEnd: index === len - 1,
@@ -211,4 +211,4 @@ const Gameboard = () => {
   return { getBoard, isAllSunk, receiveAttack };
 };
 
-export default Gameboard;
+export default gameboard;

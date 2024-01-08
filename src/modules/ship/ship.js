@@ -1,4 +1,4 @@
-const Ship = (len = 1) => {
+const ship = (len = 1) => {
   let hits = 0;
 
   const getLength = () => len;
@@ -9,4 +9,4 @@ const Ship = (len = 1) => {
   return { getHits, getLength, hit, isSunk };
 };
 
-export default Ship;
+export default ship;

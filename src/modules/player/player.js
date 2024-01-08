@@ -1,4 +1,4 @@
-const Player = (gameboard) => {
+const Playerlayer = (gameboard) => {
   const _illegalSpots = new Set();
 
   const _validateCoords = (row, col) => {
@@ -33,4 +33,4 @@ const Player = (gameboard) => {
   return { attack };
 };
 
-export default Player;
+export default Playerlayer;

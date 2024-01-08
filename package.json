@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "scripts": {
     "test": "jest",
     "build": "webpack",
     "deploy": "gh-pages -d dist",
-    "start": "webpack serve --open"
+    "start": "webpack serve --open",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +27,8 @@
     "eslint": "^8.56.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^9.1.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "prettier": "3.1.1",
     "style-loader": "^3.3.3",
     "webpack": "^5.89.0",

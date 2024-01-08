@@ -1,4 +1,4 @@
-const GUI = () => {
+const gui = () => {
   const paintBoard = (board, computer = false) => {
     const grid = document.querySelector(computer ? '.comp-grid' : '.my-grid');
 
@@ -56,4 +56,4 @@ const GUI = () => {
   return { getPlayerPosition, paintBoard, showForm, hideForm };
 };
 
-export default GUI();
+export default gui();

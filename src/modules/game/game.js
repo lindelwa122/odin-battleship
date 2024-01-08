@@ -1,15 +1,15 @@
-import Gameboard from '../gameboard/gameboard';
-import Player from '../player/player';
-import Computer from '../computer/computer';
+import gameboard from '../gameboard/gameboard';
+import player from '../player/player';
+import computer from '../computer/computer';
 import GUI from '../gui/gui';
 import startGame from '../../startGame';
 
-const Game = () => {
-  const _pB = Gameboard(); // playerBoard
-  const _cB = Gameboard(); // computerBoard
+const game = () => {
+  const _pB = gameboard(); // playerBoard
+  const _cB = gameboard(); // computerBoard
 
-  const _player = Player(_cB);
-  const _comp = Computer(_pB, true);
+  const _player = player(_cB);
+  const _comp = computer(_pB, true);
 
   // Paint player's grid
   GUI.paintBoard(_pB.getBoard());
@@ -192,4 +192,4 @@ const Game = () => {
   return { play, updateShipCoords };
 };
 
-export default Game;
+export default game;

@@ -1,8 +1,8 @@
-import Game from './modules/game/game';
+import gameFunc from './modules/game/game';
 import GUI from './modules/gui/gui';
 
 const startGame = () => {
-  const game = Game();
+  const game = gameFunc();
 
   const getFormData = (form) => {
     const formData = {};

@@ -1,9 +1,9 @@
-import Computer from './computer';
-import Gameboard from '../gameboard/gameboard';
+import computer from './computer';
+import gameboard from '../gameboard/gameboard';
 
 test('test player (computer)', () => {
-  const gb = Gameboard();
-  const comp = Computer(gb, true);
+  const gb = gameboard();
+  const comp = computer(gb, true);
 
   comp.prepareAttack();
 
