@@ -1,4 +1,4 @@
-import Ship from "../ship/ship";
+import Ship from '../ship/ship';
 
 const Gameboard = () => {
   const _board = [];
@@ -17,7 +17,7 @@ const Gameboard = () => {
     const findShipStart = (row, col, shipInfo) => {
       for (let i = 0; i < 4; i++) {
         let step;
-        if (shipInfo.direction === "horizontal") {
+        if (shipInfo.direction === 'horizontal') {
           step = _board[row][col - i].shipInfo;
 
           if (step.isStart) {
@@ -57,7 +57,7 @@ const Gameboard = () => {
         const dir = shipInfo.direction;
 
         for (let i = 0; i < shipLen; i++) {
-          if (dir === "horizontal") {
+          if (dir === 'horizontal') {
             if (i === 0 && start - 1 >= 0) hitShip(row, start - 1);
 
             if (start + i <= 9) {
@@ -139,13 +139,13 @@ const Gameboard = () => {
   // Random Direction
   const _randDir = () => {
     const ran = Math.floor(Math.random() * 2);
-    return ran === 0 ? "horizontal" : "vertical";
+    return ran === 0 ? 'horizontal' : 'vertical';
   };
 
   const _randomSpots = (len) => {
-    if (typeof len !== "number" || len < 0 || len > 4) {
+    if (typeof len !== 'number' || len < 0 || len > 4) {
       throw new Error(
-        "The length must be a number and inclusively between 1 and 4"
+        'The length must be a number and inclusively between 1 and 4',
       );
     }
 
@@ -153,12 +153,12 @@ const Gameboard = () => {
       const spots = [];
       const [row, col] = _randCoords();
       const dir = _randDir();
-      if (dir === "horizontal" && col + len <= 10) {
+      if (dir === 'horizontal' && col + len <= 10) {
         for (let i = 0; i < len; i++) {
           const curCol = col + i;
           spots.push([row, curCol]);
         }
-      } else if (dir === "vertical" && row + len <= 10) {
+      } else if (dir === 'vertical' && row + len <= 10) {
         for (let i = 0; i < len; i++) {
           const curRow = row + i;
           spots.push([curRow, col]);
@@ -177,9 +177,9 @@ const Gameboard = () => {
   const _ships = [];
 
   const _createShip = (len) => {
-    if (typeof len !== "number" || len < 0 || len > 4) {
+    if (typeof len !== 'number' || len < 0 || len > 4) {
       throw new Error(
-        "The length must be a number and inclusively between 1 and 4"
+        'The length must be a number and inclusively between 1 and 4',
       );
     }
 

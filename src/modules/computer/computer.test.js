@@ -1,5 +1,5 @@
-import Computer from "./computer";
-import Gameboard from "../gameboard/gameboard";
+import Computer from './computer';
+import Gameboard from '../gameboard/gameboard';
 
 test('test player (computer)', () => {
   const gb = Gameboard();

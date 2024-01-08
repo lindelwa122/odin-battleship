@@ -49,7 +49,7 @@ main {
   border-left: 1px solid #cacaca;
 }
 
-.board .row, 
+.board .row,
 .rows-coords {
   display: flex;
 }
@@ -147,4 +147,3 @@ select {
   padding: 10px;
   border-radius: 10px;
 }
-

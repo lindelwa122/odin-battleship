@@ -1,4 +1,4 @@
-import Gameboard from "./gameboard";
+import Gameboard from './gameboard';
 
 test('Test battleship', () => {
   const gb = Gameboard();

@@ -2,16 +2,16 @@ const Player = (gameboard) => {
   const _illegalSpots = new Set();
 
   const _validateCoords = (row, col) => {
-    if (!(typeof row === "number" && typeof col === "number")) {
-      throw new Error("Coordinates should be a number data type.");
+    if (!(typeof row === 'number' && typeof col === 'number')) {
+      throw new Error('Coordinates should be a number data type.');
     }
 
     if (isNaN(row) || isNaN(col)) {
-      throw new Error("Coordinates should not be NaN.");
+      throw new Error('Coordinates should not be NaN.');
     }
 
     if (row < 0 || row > 9 || col < 0 || col > 9) {
-      throw new Error("Invalid coordinates.");
+      throw new Error('Invalid coordinates.');
     }
 
     if (_illegalSpots.has(`${row},${col}`)) {

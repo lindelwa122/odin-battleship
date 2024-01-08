@@ -1,5 +1,5 @@
-import Game from "./modules/game/game";
-import GUI from "./modules/gui/gui";
+import Game from './modules/game/game';
+import GUI from './modules/gui/gui';
 
 const startGame = () => {
   const game = Game();
@@ -21,18 +21,18 @@ const startGame = () => {
     }
   };
 
-  const form = document.querySelector("form");
-  form.addEventListener("submit", submitHandler);
+  const form = document.querySelector('form');
+  form.addEventListener('submit', submitHandler);
 
   const playHandler = () => {
-    form.removeEventListener("submit", submitHandler);
-    playBtn.removeEventListener("click", playHandler);
+    form.removeEventListener('submit', submitHandler);
+    playBtn.removeEventListener('click', playHandler);
     GUI.hideForm();
     game.play();
   };
 
-  const playBtn = document.querySelector(".play-btn");
-  playBtn.addEventListener("click", playHandler);
+  const playBtn = document.querySelector('.play-btn');
+  playBtn.addEventListener('click', playHandler);
 };
 
 export default startGame;

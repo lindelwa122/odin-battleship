@@ -4,7 +4,9 @@ const GUI = () => {
 
     for (let row = 0; row < board.length; row++) {
       for (let col = 0; col < board[row].length; col++) {
-        const box = grid.querySelector(`.row[data-coord='${row}'] > .col[data-coord='${col}']`);
+        const box = grid.querySelector(
+          `.row[data-coord='${row}'] > .col[data-coord='${col}']`,
+        );
 
         const spot = board[row][col];
         const shipInfo = spot.shipInfo;
@@ -19,7 +21,7 @@ const GUI = () => {
         }
       }
     }
-  }
+  };
 
   const getPlayerPosition = () => {
     const spots = document.querySelectorAll('.comp-grid .col');
@@ -34,22 +36,22 @@ const GUI = () => {
         const parent = ele.parentElement;
         const row = +parent.dataset.coord;
         const col = +ele.dataset.coord;
-        resolve({row, col});
-      }
+        resolve({ row, col });
+      };
 
       spots.forEach((spot) => {
         spot.addEventListener('click', handleClick);
       });
-    })
-  }
+    });
+  };
 
   const showForm = () => {
     document.querySelector('form').style.display = 'flex';
-  }
+  };
 
   const hideForm = () => {
     document.querySelector('form').style.display = 'none';
-  }
+  };
 
   return { getPlayerPosition, paintBoard, showForm, hideForm };
 };

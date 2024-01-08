@@ -1,13 +1,13 @@
-import Gameboard from "../gameboard/gameboard";
-import Player from "../player/player";
-import Computer from "../computer/computer";
-import GUI from "../gui/gui";
-import startGame from "../../startGame";
+import Gameboard from '../gameboard/gameboard';
+import Player from '../player/player';
+import Computer from '../computer/computer';
+import GUI from '../gui/gui';
+import startGame from '../../startGame';
 
 const Game = () => {
   const _pB = Gameboard(); // playerBoard
-  const _cB = Gameboard() // computerBoard
-  
+  const _cB = Gameboard(); // computerBoard
+
   const _player = Player(_cB);
   const _comp = Computer(_pB, true);
 
@@ -16,12 +16,12 @@ const Game = () => {
 
   const _isGameOver = () => {
     return _pB.isAllSunk() || _cB.isAllSunk();
-  }
+  };
 
   const _cleanUpBoard = () => {
     const spots = document.querySelectorAll('.col');
-    spots.forEach(spot => spot.classList.remove('sunk', 'ship', 'hit'));
-  }
+    spots.forEach((spot) => spot.classList.remove('sunk', 'ship', 'hit'));
+  };
 
   const _restartGame = () => {
     const playBtn = document.querySelector('.play-again-btn');
@@ -31,10 +31,10 @@ const Game = () => {
       _cleanUpBoard();
       GUI.showForm();
       startGame();
-    }
+    };
 
     playBtn.addEventListener('click', handleClick);
-  }
+  };
 
   const _displayWinner = () => {
     const playerWon = _cB.isAllSunk();
@@ -46,7 +46,7 @@ const Game = () => {
       : 'Game Over. You lost.';
 
     _restartGame();
-  }
+  };
 
   let _currentPlayer = 'player';
   const play = async () => {
@@ -58,30 +58,30 @@ const Game = () => {
         if (res && !res.shipHit) _currentPlayer = 'comp';
 
         // Update board
-        const b = _cB.getBoard()
+        const b = _cB.getBoard();
         GUI.paintBoard(b, true);
       } else {
         _comp.prepareAttack();
         _currentPlayer = 'player';
 
         // Update board
-        const b = _pB.getBoard()
+        const b = _pB.getBoard();
         GUI.paintBoard(b);
       }
     }
 
     _displayWinner();
-  }
+  };
 
   const _findShipStart = (row, col, shipInfo) => {
     const board = _pB.getBoard();
     for (let i = 0; i < 4; i++) {
       let step;
-      if (shipInfo.direction === "horizontal") {
+      if (shipInfo.direction === 'horizontal') {
         step = board[row][col - i].shipInfo;
 
         if (step.isStart) {
-          return { row, col: col - i};
+          return { row, col: col - i };
         }
       } else {
         step = board[row - i][col].shipInfo;
@@ -100,8 +100,8 @@ const Game = () => {
     const shipLen = shipInfo.ship.getLength();
     const shipStart = _findShipStart(row, col, shipInfo);
 
-    console.log('row start', shipStart.row)
-    console.log('col start', shipStart.col)
+    console.log('row start', shipStart.row);
+    console.log('col start', shipStart.col);
 
     for (let i = 0; i < shipLen; i++) {
       if (shipInfo.direction === 'horizontal') {
@@ -112,7 +112,7 @@ const Game = () => {
     }
 
     return { dir: shipInfo.direction, shipCoords };
-  }
+  };
 
   const _validateNewCoords = (row, col, shipLen, dir) => {
     const isOccupied = (row, col) => {
@@ -122,27 +122,27 @@ const Game = () => {
       } else {
         return false;
       }
-    }
+    };
 
     const isLegal = (spots) => {
       for (const spot of spots) {
         const { row, col } = spot;
-  
+
         if (isOccupied(row, col)) return false;
         else if (isOccupied(row - 1, col)) return false;
         else if (isOccupied(row + 1, col)) return false;
         else if (isOccupied(row, col - 1)) return false;
         else if (isOccupied(row, col + 1)) return false;
-        else if (isOccupied(row - 1, col - 1))  return false;
+        else if (isOccupied(row - 1, col - 1)) return false;
         else if (isOccupied(row - 1, col + 1)) return false;
         else if (isOccupied(row + 1, col - 1)) return false;
         else if (isOccupied(row + 1, col + 1)) return false;
       }
-  
+
       return true;
     };
 
-    const  newCoords = []
+    const newCoords = [];
     for (let i = 0; i < shipLen; i++) {
       if (dir === 'horizontal') {
         newCoords.push({ row, col: col + i });
@@ -154,10 +154,10 @@ const Game = () => {
     console.log(newCoords);
 
     return isLegal(newCoords);
-  }
+  };
 
   const updateShipCoords = (row, col, newRow, newCol) => {
-    console.log("identify row", row)
+    console.log('identify row', row);
 
     const board = _pB.getBoard();
     if (!board[row][col].shipInfo) return false;
@@ -187,7 +187,7 @@ const Game = () => {
     GUI.paintBoard(_pB.getBoard());
 
     return true;
-  }
+  };
 
   return { play, updateShipCoords };
 };
