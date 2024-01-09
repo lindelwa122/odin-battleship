@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battleships</title>
+</head>
+<body>
+    <header>
+        <h1>Battleships</h1>
+        <form class="update-coords">
+            <div class="from">
+                <div class="caption">From: </div>
+                <select id="old-row-coords" name="oldRow">
+                    <option disabled>Row</option>
+                    <option value="0">1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                    <option value="5">6</option>
+                    <option value="6">7</option>
+                    <option value="7">8</option>
+                    <option value="8">9</option>
+                    <option value="9">10</option>
+                </select>
+                <select id="old-col-coords" name="oldCol">
+                    <option disabled>Col</option>
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                    <option value="2">C</option>
+                    <option value="3">D</option>
+                    <option value="4">E</option>
+                    <option value="5">F</option>
+                    <option value="6">G</option>
+                    <option value="7">H</option>
+                    <option value="8">I</option>
+                    <option value="9">J</option>
+                </select>
+            </div>
+            <div class="to">
+                <div class="caption">To: </div>
+                <select id="new-row-coords" name="newRow">
+                    <option disabled>Row</option>
+                    <option value="0">1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                    <option value="5">6</option>
+                    <option value="6">7</option>
+                    <option value="7">8</option>
+                    <option value="8">9</option>
+                    <option value="9">10</option>
+                </select>
+                <select id="new-col-coords" name="newCol">
+                    <option disabled >Col</option>
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                    <option value="2">C</option>
+                    <option value="3">D</option>
+                    <option value="4">E</option>
+                    <option value="5">F</option>
+                    <option value="6">G</option>
+                    <option value="7">H</option>
+                    <option value="8">I</option>
+                    <option value="9">J</option>
+                </select>
+            </div>
+            <button class="update-coords-btn">Update Ship Position</button>
+            <button type="button" class="play-btn">Play</button>
+        </form>
+    </header>
+
+    <main>
+        <div class="my-grid">
+            <div class="rows-coords">
+                <div>A</div>
+                <div>B</div>
+                <div>C</div>
+                <div>D</div>
+                <div>E</div>
+                <div>F</div>
+                <div>G</div>
+                <div>H</div>
+                <div>I</div>
+                <div>J</div>
+            </div>
+            <div class="cols-coords">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+                <div>8</div>
+                <div>9</div>
+                <div>10</div>
+            </div>
+            <div class="board">
+                <div class="row" data-coord="0">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="1">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="2">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="3">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="4">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="5">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="6">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="7">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="8">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="9">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+            </div>
+            <div class="caption">Your grid</div>
+        </div>
+        <div class="comp-grid">
+            <div class="rows-coords">
+                <div>A</div>
+                <div>B</div>
+                <div>C</div>
+                <div>D</div>
+                <div>E</div>
+                <div>F</div>
+                <div>G</div>
+                <div>H</div>
+                <div>I</div>
+                <div>J</div>
+            </div>
+            <div class="cols-coords">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+                <div>8</div>
+                <div>9</div>
+                <div>10</div>
+            </div>
+            <div class="board">
+                <div class="row" data-coord="0">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="1">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="2">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="3">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="4">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="5">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="6">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="7">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="8">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+                <div class="row" data-coord="9">
+                    <div class="col" data-coord="0"></div>
+                    <div class="col" data-coord="1"></div>
+                    <div class="col" data-coord="2"></div>
+                    <div class="col" data-coord="3"></div>
+                    <div class="col" data-coord="4"></div>
+                    <div class="col" data-coord="5"></div>
+                    <div class="col" data-coord="6"></div>
+                    <div class="col" data-coord="7"></div>
+                    <div class="col" data-coord="8"></div>
+                    <div class="col" data-coord="9"></div>
+                </div>
+            </div>
+            <div class="caption">Enemy's grid</div>
+        </div>
+    </main>
+
+    <dialog method='dialog'>
+        <p class='result-text'></p>
+        <button class='play-again-btn'>Play Again</button>
+    </dialog>
+
+    <script src="./main.js"></script>
+</body>
+</html>
